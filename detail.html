@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Buku - Perpustakaan GMNI Banjarmasin</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,800;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --merah: #c0392b;
+            --merah-tua: #922b21;
+            --emas: #d4ac0d;
+            --emas-muda: #f1c40f;
+            --gelap: #1a0a0a;
+            --gelap2: #2c1010;
+            --krem: #fdf6e3;
+            --krem2: #f5e6c8;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(rgba(26, 10, 10, 0.85), rgba(26, 10, 10, 0.85)), url('assets/background.jpg');
+            background-color: var(--gelap);
+            color: var(--krem);
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 0.5s ease;
+        }
+        
+        .navbar {
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(212, 172, 13, 0.2);
+            background: rgba(26, 10, 10, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-brand {
+            font-family: 'EB Garamond', serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--emas);
+            text-decoration: none;
+        }
+        
+        .navbar-brand span {
+            color: rgba(253, 246, 227, 0.6);
+            font-weight: 400;
+            font-size: 14px;
+        }
+        
+        .upload-bg {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            border: 1px solid rgba(212, 172, 13, 0.4);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--emas);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .upload-bg:hover {
+            background: rgba(212, 172, 13, 0.1);
+            border-color: var(--emas);
+        }
+        
+        .upload-bg input[type="file"] {
+            display: none;
+        }
+        
+        .btn-reset-bg {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            border: 1px solid rgba(192, 57, 43, 0.4);
+            border-radius: 8px;
+            background: transparent;
+            color: #f1948a;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .btn-reset-bg:hover {
+            background: rgba(192, 57, 43, 0.1);
+            border-color: var(--merah);
+        }
+        
+        .btn-kembali {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            border: 1px solid rgba(212, 172, 13, 0.4);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--emas);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .btn-kembali:hover {
+            background: rgba(212, 172, 13, 0.1);
+            border-color: var(--emas);
+        }
+        /* Konten Utama */
+        
+        .konten-utama {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 50px 30px;
+        }
+        
+        .kartu-detail {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 50px;
+            background: rgba(253, 246, 227, 0.03);
+            border: 1px solid rgba(212, 172, 13, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        /* Cover buku */
+        
+        .wadah-cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .cover-img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 172, 13, 0.2);
+        }
+        
+        .cover-placeholder {
+            width: 100%;
+            aspect-ratio: 2/3;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--merah-tua), var(--gelap2));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid rgba(212, 172, 13, 0.2);
+            font-size: 50px;
+        }
+        
+        .cover-placeholder-label {
+            font-family: 'EB Garamond', serif;
+            font-size: 14px;
+            color: rgba(253, 246, 227, 0.4);
+            text-align: center;
+            padding: 0 10px;
+        }
+        /* Tombol Favorit besar */
+        
+        .btn-fav-besar {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(192, 57, 43, 0.5);
+            background: rgba(192, 57, 43, 0.1);
+            color: #f1948a;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        
+        .btn-fav-besar:hover,
+        .btn-fav-besar.aktif {
+            background: rgba(192, 57, 43, 0.3);
+            border-color: var(--merah);
+        }
+        /* Info buku */
+        
+        .info-buku {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .badge-kategori {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: rgba(192, 57, 43, 0.25);
+            border: 1px solid rgba(192, 57, 43, 0.4);
+            color: #f1948a;
+            align-self: flex-start;
+        }
+        
+        .judul-buku {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(24px, 4vw, 38px);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--krem);
+        }
+        
+        .penulis-buku {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: rgba(253, 246, 227, 0.6);
+        }
+        
+        .garis {
+            height: 1px;
+            background: rgba(212, 172, 13, 0.2);
+        }
+        
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(253, 246, 227, 0.4);
+        }
+        
+        .meta-nilai {
+            font-size: 15px;
+            color: var(--krem);
+        }
+        
+        .badge-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .status-tersedia {
+            background: rgba(39, 174, 96, 0.2);
+            border: 1px solid rgba(39, 174, 96, 0.4);
+            color: #82e0aa;
+        }
+        
+        .status-dipinjam {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            color: #f1948a;
+        }
+        
+        .status-segera {
+            background: rgba(243, 156, 18, 0.2);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            color: #f9e79f;
+        }
+        
+        .rating-bintang {
+            color: var(--emas-muda);
+            font-size: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .sinopsis-judul {
+            font-family: 'EB Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--emas);
+            margin-bottom: 8px;
+        }
+        
+        .sinopsis-teks {
+            font-size: 15px;
+            line-height: 1.8;
+            color: rgba(253, 246, 227, 0.75);
+        }
+        /* Buku lainnya */
+        
+        .bagian-lain {
+            margin-top: 20px;
+        }
+        
+        .bagian-judul {
+            font-family: 'EB Garamond', serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--krem);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 172, 13, 0.2);
+        }
+        
+        .grid-lain {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+        }
+        
+        .kartu-buku-kecil {
+            background: rgba(253, 246, 227, 0.04);
+            border: 1px solid rgba(212, 172, 13, 0.1);
+            border-radius: 10px;
+            padding: 16px;
+            text-decoration: none;
+            transition: 0.25s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .kartu-buku-kecil:hover {
+            background: rgba(253, 246, 227, 0.08);
+            border-color: rgba(212, 172, 13, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .kartu-kecil-judul {
+            font-family: 'EB Garamond', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--krem);
+            line-height: 1.3;
+        }
+        
+        .kartu-kecil-penulis {
+            font-size: 12px;
+            color: rgba(253, 246, 227, 0.45);
+        }
+        
+        .kartu-kecil-badge {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            background: rgba(192, 57, 43, 0.2);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            color: #f1948a;
+            align-self: flex-start;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(212, 172, 13, 0.2);
+            color: rgba(253, 246, 227, 0.3);
+            font-size: 13px;
+        }
+        
+        .footer-nama {
+            color: var(--emas);
+        }
+        /* Halaman 404 */
+        
+        .halaman-404 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            gap: 20px;
+            color: rgba(253, 246, 227, 0.5);
+        }
+        
+        .icon-404 {
+            font-size: 64px;
+        }
+        /* Responsive */
+        
+        @media (max-width: 680px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .kartu-detail {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 25px;
+            }
+            .wadah-cover {
+                max-width: 180px;
+            }
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+            .konten-utama {
+                padding: 30px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+        GMNI <span>Banjarmasin — Perpustakaan</span>
+    </a>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <label class="upload-bg">
+            📸 Upload Background
+            <input type="file" id="uploadBg" accept="image/*">
+        </label>
+            <button class="btn-reset-bg" onclick="resetBackground()">🔄 Reset</button>
+            <a href="index.html" class="btn-kembali">← Kembali ke Katalog</a>
+        </div>
+    </nav>
+
+    <div class="konten-utama" id="kontenUtama">
+        <!-- Diisi oleh JavaScript -->
+    </div>
+
+    <footer>
+        &copy; 2026 &nbsp;|&nbsp; Perpustakaan <span class="footer-nama">GMNI Cabang Banjarmasin</span>
+    </footer>
+
+    <script>
+        // ============================================================
+        // DATABASE BUKU (SAMA PERSIS DENGAN index.html)
+        // Jika menambah buku di index.html, tambah juga di sini
+        // ============================================================
+        const daftarBuku = [{
+            id: "1",
+            judul: "Bumi Manusia",
+            penulis: "Pramoedya Ananta Toer",
+            tahun: "1980",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Novel pertama dari Tetralogi Buru. Kisah Minke, pemuda pribumi terpelajar di era kolonial Belanda, yang mencintai Annelies dan berhadapan dengan sistem hukum kolonial yang diskriminatif.",
+            cover: "assets/Buku%20Bumi%20Manusia.jpg"
+        }, {
+            id: "2",
+            judul: "Laskar Pelangi",
+            penulis: "Andrea Hirata",
+            tahun: "2005",
+            kategori: "Fiksi Inspiratif",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kisah sepuluh anak Belitung dengan semangat belajar luar biasa di sekolah Muhammadiyah yang hampir rubuh. Menjadi novel Indonesia terlaris sepanjang masa.",
+            cover: "assets/Buku%20Laskar%20Pelangi.jpg"
+        }, {
+            id: "3",
+            judul: "Atomic Habits",
+            penulis: "James Clear",
+            tahun: "2018",
+            kategori: "Pengembangan Diri",
+            status: "Dipinjam",
+            rating: 5,
+            sinopsis: "Panduan praktis membangun kebiasaan baik dan menghapus kebiasaan buruk. Clear membuktikan bahwa perubahan kecil 1% setiap hari dapat menghasilkan perbedaan luar biasa.",
+            cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1655988385i/40121378.jpg"
+        }, {
+            id: "4",
+            judul: "Sapiens",
+            penulis: "Yuval Noah Harari",
+            tahun: "2011",
+            kategori: "Sejarah & Ilmu Pengetahuan",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Sejarah singkat umat manusia dari zaman batu hingga era modern. Harari mengeksplorasi bagaimana Homo sapiens menguasai bumi melalui bahasa, mitos, dan institusi.",
+            cover: "assets/Buku%20Sapiens.jpg"
+        }, {
+            id: "5",
+            judul: "Filosofi Teras",
+            penulis: "Henry Manampiring",
+            tahun: "2019",
+            kategori: "Filsafat",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Mengenalkan filsafat Stoa kuno kepada pembaca modern Indonesia. Mengajarkan cara menghadapi hal-hal di luar kendali kita dengan tenang dan bijaksana.",
+            cover: "assets/Buku%20Filosofi%20Teras.jpg"
+        }, {
+            id: "6",
+            judul: "Laut Bercerita",
+            penulis: "Leila S. Chudori",
+            tahun: "2017",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Novel tentang aktivis mahasiswa yang hilang di era Orde Baru. Diceritakan dari dua sudut pandang: sang aktivis dan adiknya yang mencari kebenaran.",
+            cover: "assets/Buku%20Laut%20Bercerita.jpg"
+        }, {
+            id: "7",
+            judul: "Pemikiran Politik Sukarno",
+            penulis: "Lambert Giebels",
+            tahun: "2001",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Analisis mendalam tentang evolusi pemikiran politik Bung Karno dari masa muda hingga menjadi Presiden pertama Republik Indonesia.",
+            cover: "assets/Buku%20Pemikiran%20Politik%20Sukarno.jpg"
+        }, {
+            id: "8",
+            judul: "Homo Deus",
+            penulis: "Yuval Noah Harari",
+            tahun: "2015",
+            kategori: "Sejarah & Ilmu Pengetahuan",
+            status: "Segera Hadir",
+            rating: 4,
+            sinopsis: "Setelah Sapiens, Harari melihat masa depan umat manusia. Ketika manusia berhasil mengatasi kelaparan, wabah, dan perang, apa tujuan berikutnya?",
+            cover: "assets/Buku%20Homo%20Deus.jpg"
+        }, {
+            id: "9",
+            judul: "Negeri 5 Menara",
+            penulis: "Ahmad Fuadi",
+            tahun: "2009",
+            kategori: "Fiksi Inspiratif",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Kisah Alif dan lima sahabat di pesantren Gontor. Dengan mantra 'Man jadda wajada', mereka membuktikan mimpi bisa diraih dengan tekad dan kerja keras.",
+            cover: "assets/Buku%20Negeri%205%20Menara.jpg"
+        }, {
+            id: "10",
+            judul: "The Communist Manifesto",
+            penulis: "Karl Marx & Friedrich Engels",
+            tahun: "1848",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Dokumen paling berpengaruh dalam sejarah gerakan buruh. Menganalisis kapitalisme dan mengajukan teori perjuangan kelas sebagai motor sejarah.",
+            cover: "assets/Buku%20The%20Communist%20Manifesto.jpg"
+        }, {
+            id: "11",
+            judul: "Ikigai",
+            penulis: "Héctor García & Francesc Miralles",
+            tahun: "2016",
+            kategori: "Pengembangan Diri",
+            status: "Dipinjam",
+            rating: 4,
+            sinopsis: "Rahasia panjang umur dan kebahagiaan orang Jepang. Ikigai adalah konsep menemukan alasan untuk bangun setiap pagi, perpaduan passion, misi, profesi, dan panggilan.",
+            cover: "assets/Buku%20Ikigai.jpg"
+        }, {
+            id: "12",
+            judul: "Sejarah Gerakan Mahasiswa Indonesia",
+            penulis: "John Ingleson",
+            tahun: "1988",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kajian akademis tentang peran mahasiswa dalam pergerakan nasional Indonesia dari masa kolonial hingga kemerdekaan. Referensi penting bagi aktivis dan peneliti.",
+            cover: "assets/Buku%20Sejarah%20Gerakan%20Mahasiswa%20Indonesia.jpg"
+        }, {
+            id: "13",
+            judul: "Thinking, Fast and Slow",
+            penulis: "Daniel Kahneman",
+            tahun: "2011",
+            kategori: "Psikologi",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kahneman, peraih Nobel Ekonomi, menjelaskan dua sistem berpikir manusia. Mengungkap mengapa kita sering membuat keputusan irasional dan cara mengatasinya.",
+            cover: "assets/Buku%20Thinking%2C%20Fast%20and%20Slow.jpg"
+        }, {
+            id: "14",
+            judul: "Pulang",
+            penulis: "Leila S. Chudori",
+            tahun: "2012",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kisah empat eksil politik Indonesia di Paris pasca G30S 1965. Tentang kerinduan akan tanah air, identitas, dan pencarian kebenaran sejarah.",
+            cover: "assets/Buku%20Pulang.jpg"
+        }, {
+            id: "15",
+            judul: "Rich Dad Poor Dad",
+            penulis: "Robert T. Kiyosaki",
+            tahun: "1997",
+            kategori: "Pengembangan Diri",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Pelajaran keuangan yang tidak diajarkan di sekolah. Melalui kisah dua ayah dengan pola pikir berbeda, Kiyosaki mengajarkan cara membangun kebebasan finansial.",
+            cover: "assets/Buku%20Rich%20Dad%20Poor%20Dad.png"
+        }];
+
+        // ============================================================
+        // LOGIKA HALAMAN DETAIL
+        // ============================================================
+        const params = new URLSearchParams(window.location.search);
+        const idBuku = params.get('id');
+        const buku = daftarBuku.find(b => b.id === idBuku);
+        const konten = document.getElementById('kontenUtama');
+
+        let favoritSet = new Set(JSON.parse(localStorage.getItem('gmni-favorit') || '[]'));
+
+        function simpanFavorit() {
+            localStorage.setItem('gmni-favorit', JSON.stringify([...favoritSet]));
+        }
+
+        if (!buku) {
+            konten.innerHTML = `
+        <div class="halaman-404">
+            <div class="icon-404">📚</div>
+            <h2 style="font-family:'EB Garamond',serif;font-size:28px;">Buku tidak ditemukan</h2>
+            <p>ID buku tidak valid atau sudah dihapus dari katalog.</p>
+            <a href="index.html" class="btn-kembali" style="margin-top:10px;">← Kembali ke Katalog</a>
+        </div>`;
+        } else {
+            const statusClass = buku.status === 'Tersedia' ? 'status-tersedia' :
+                buku.status === 'Dipinjam' ? 'status-dipinjam' : 'status-segera';
+            const bintang = '★'.repeat(buku.rating) + '☆'.repeat(5 - buku.rating);
+            const isFav = favoritSet.has(buku.id);
+
+            // Buku lainnya (kategori sama, bukan buku ini sendiri, max 4)
+            const bukuLain = daftarBuku
+                .filter(b => b.id !== buku.id && b.kategori === buku.kategori)
+                .slice(0, 4);
+
+            const coverHtml = buku.cover ?
+                `<img src="${buku.cover}" alt="Cover ${buku.judul}" class="cover-img" onerror="this.style.display='none';document.getElementById('placeholder-cover').style.display='flex'">
+           <div class="cover-placeholder" id="placeholder-cover" style="display:none;"><span>📖</span><span class="cover-placeholder-label">${buku.judul}</span></div>` :
+                `<div class="cover-placeholder"><span>📖</span><span class="cover-placeholder-label">${buku.judul}</span></div>`;
+
+            document.title = `${buku.judul} — Perpustakaan GMNI Banjarmasin`;
+
+            konten.innerHTML = `
+        <div class="kartu-detail">
+            <div class="wadah-cover">
+                ${coverHtml}
+                <button class="btn-fav-besar ${isFav ? 'aktif' : ''}" id="btnFav" onclick="handleFavorit()">
+                    <span id="ikonFav">${isFav ? '❤️' : '🤍'}</span>
+                    <span id="teksF">${isFav ? 'Difavoritkan' : 'Tambah Favorit'}</span>
+                </button>
+            </div>
+            <div class="info-buku">
+                <span class="badge-kategori">${buku.kategori}</span>
+                <h1 class="judul-buku">${buku.judul}</h1>
+                <p class="penulis-buku">oleh ${buku.penulis}</p>
+                <div class="garis"></div>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Tahun Terbit</span>
+                        <span class="meta-nilai">${buku.tahun}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Status</span>
+                        <span class="badge-status ${statusClass}">${buku.status}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Rating</span>
+                        <span class="rating-bintang">${bintang}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Kategori</span>
+                        <span class="meta-nilai">${buku.kategori}</span>
+                    </div>
+                </div>
+                <div class="garis"></div>
+                <div>
+                    <p class="sinopsis-judul">Sinopsis</p>
+                    <p class="sinopsis-teks">${buku.sinopsis}</p>
+                </div>
+            </div>
+        </div>
+
+        ${bukuLain.length > 0 ? `
+        <div class="bagian-lain">
+            <h3 class="bagian-judul">Buku Serupa — ${buku.kategori}</h3>
+            <div class="grid-lain">
+                ${bukuLain.map(b => `
+                    <a href="detail.html?id=${b.id}" class="kartu-buku-kecil">
+                        <span class="kartu-kecil-judul">${b.judul}</span>
+                        <span class="kartu-kecil-penulis">${b.penulis}</span>
+                        <span class="kartu-kecil-badge">${b.status}</span>
+                    </a>
+                `).join('')}
+            </div>
+        </div>` : ''}
+    `;
+}
+
+function handleFavorit() {
+    const btn = document.getElementById('btnFav');
+    const ikon = document.getElementById('ikonFav');
+    const teks = document.getElementById('teksF');
+
+    if (favoritSet.has(buku.id)) {
+        favoritSet.delete(buku.id);
+        ikon.textContent = '🤍';
+        teks.textContent = 'Tambah Favorit';
+        btn.classList.remove('aktif');
+    } else {
+        favoritSet.add(buku.id);
+        ikon.textContent = '❤️';
+        teks.textContent = 'Difavoritkan';
+        btn.classList.add('aktif');
+    }
+    simpanFavorit();
+}
+
+// ============================================================
+// FITUR BACKGROUND KUSTOM
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('uploadBg').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.body.style.backgroundImage = `url(${e.target.result})`;
+                // Simpan ke localStorage agar tetap ada saat refresh
+                localStorage.setItem('gmni-bg', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+function resetBackground() {
+    document.body.style.backgroundImage = 'none';
+    localStorage.removeItem('gmni-bg');
+}
+
+// Load background dari localStorage saat halaman load
+window.addEventListener('load', function() {
+    const savedBg = localStorage.getItem('gmni-bg');
+    if (savedBg) {
+        document.body.style.backgroundImage = `url(${savedBg})`;
+    }
+});
+    </script>
+</body>
+
+</html>

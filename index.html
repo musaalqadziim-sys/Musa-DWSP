@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan GMNI Cabang Banjarmasin</title>
+    <link href="https://th.bing.com/th/id/OIP.wTRDIxrctebP9ikK2Hyk2gHaEn?w=253&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" rel="stylesheet">
+    <style>
+         :root {
+            --merah: #c0392b;
+            --merah-tua: #922b21;
+            --merah-muda: #e74c3c;
+            --emas: #d4ac0d;
+            --emas-muda: #f1c40f;
+            --gelap: #1a0a0a;
+            --gelap2: #2c1010;
+            --krem: #fdf6e3;
+            --krem2: #f5e6c8;
+            --abu: #8b7355;
+            --putih: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--gelap);
+            color: var(--krem);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* =====================
+           HERO / HEADER
+        ===================== */
+        
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 60px 20px;
+        }
+        /* 
+        ============================================================
+        PANDUAN FOTO BACKGROUND:
+        Ganti URL di bawah ini dengan path foto kamu.
+        
+        Contoh jika foto ada di folder yang sama:
+            background-image: url('foto-perpustakaan.jpg');
+        
+        Contoh jika foto ada di subfolder:
+            background-image: url('images/foto.jpg');
+        
+        Ukuran foto yang disarankan: minimal 1920x600 px (landscape)
+        ============================================================
+        */
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.35);
+            z-index: 0;
+        }
+        /* Jika tidak ada foto, tampilkan gradient merah sebagai fallback */
+        
+        .hero-bg-fallback {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #6b0000 0%, #1a0a0a 50%, #3d0c02 100%);
+            z-index: 0;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(26, 10, 10, 0.3) 0%, rgba(26, 10, 10, 0.85) 100%);
+            z-index: 1;
+        }
+        /* Motif batang padi dekoratif */
+        
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 15% 85%, rgba(192, 57, 43, 0.15) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(212, 172, 13, 0.1) 0%, transparent 40%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 850px;
+        }
+        
+        .logo-gmni {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--merah), var(--merah-tua));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 2px solid var(--emas);
+            box-shadow: 0 0 30px rgba(192, 57, 43, 0.5);
+            flex-shrink: 0;
+        }
+        
+        .garis-emas {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--emas), transparent);
+            margin: 0 auto 15px;
+        }
+        
+        .label-organisasi {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--emas);
+            margin-bottom: 12px;
+        }
+        
+        .nama-perpustakaan {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(22px, 4vw, 36px);
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--krem);
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
+            margin-bottom: 8px;
+        }
+        
+        .nama-cabang {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(16px, 2.5vw, 22px);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--emas-muda);
+            margin-bottom: 20px;
+        }
+        
+        .deskripsi-hero {
+            font-size: 14px;
+            color: rgba(253, 246, 227, 0.65);
+            letter-spacing: 0.5px;
+        }
+        /* Counter Strip */
+        
+        .counter-strip {
+            background: linear-gradient(to right, var(--merah-tua), var(--merah), var(--merah-tua));
+            padding: 18px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            border-top: 1px solid var(--emas);
+            border-bottom: 1px solid var(--emas);
+        }
+        
+        .counter-item {
+            text-align: center;
+        }
+        
+        .counter-angka {
+            font-family: 'EB Garamond', serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--emas-muda);
+            display: block;
+        }
+        
+        .counter-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(253, 246, 227, 0.7);
+        }
+        /* =====================
+           AREA KONTROL
+        ===================== */
+        
+        .area-kontrol {
+            max-width: 960px;
+            margin: 35px auto 20px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .input-cari {
+            width: 100%;
+            padding: 14px 22px;
+            background: rgba(253, 246, 227, 0.06);
+            border: 1px solid rgba(212, 172, 13, 0.35);
+            border-radius: 8px;
+            color: var(--krem);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+        
+        .input-cari::placeholder {
+            color: rgba(253, 246, 227, 0.35);
+        }
+        
+        .input-cari:focus {
+            outline: none;
+            border-color: var(--emas);
+            background: rgba(253, 246, 227, 0.09);
+            box-shadow: 0 0 0 3px rgba(212, 172, 13, 0.15);
+        }
+        /* Filter Kategori */
+        
+        .filter-kategori {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .btn-filter {
+            padding: 7px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 172, 13, 0.4);
+            background: transparent;
+            color: rgba(253, 246, 227, 0.7);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        
+        .btn-filter:hover,
+        .btn-filter.aktif {
+            background: var(--merah);
+            border-color: var(--merah);
+            color: white;
+        }
+        /* Sorting */
+        
+        .bar-sorting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .label-sort {
+            font-size: 12px;
+            color: rgba(253, 246, 227, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-sort {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(253, 246, 227, 0.15);
+            background: transparent;
+            color: rgba(253, 246, 227, 0.6);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-sort:hover {
+            border-color: var(--emas);
+            color: var(--emas);
+        }
+        
+        .btn-sort.aktif-sort {
+            border-color: var(--emas);
+            color: var(--emas);
+            background: rgba(212, 172, 13, 0.1);
+        }
+        /* =====================
+           TABEL UTAMA
+        ===================== */
+        
+        .wadah-tabel {
+            max-width: 960px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(253, 246, 227, 0.03);
+            border: 1px solid rgba(212, 172, 13, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background: linear-gradient(to right, rgba(192, 57, 43, 0.4), rgba(192, 57, 43, 0.2));
+        }
+        
+        th {
+            padding: 16px 18px;
+            text-align: left;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--emas);
+            border-bottom: 1px solid rgba(212, 172, 13, 0.3);
+        }
+        
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid rgba(253, 246, 227, 0.06);
+            font-size: 14px;
+            color: rgba(253, 246, 227, 0.85);
+            vertical-align: middle;
+        }
+        
+        tbody tr:hover {
+            background: rgba(253, 246, 227, 0.04);
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .link-judul {
+            color: var(--krem);
+            text-decoration: none;
+            font-family: 'EB Garamond', serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .link-judul:hover {
+            color: var(--emas-muda);
+        }
+        
+        .badge-kategori {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            background: rgba(192, 57, 43, 0.25);
+            border: 1px solid rgba(192, 57, 43, 0.4);
+            color: #f1948a;
+            white-space: nowrap;
+        }
+        
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        
+        .status-tersedia {
+            background: rgba(39, 174, 96, 0.2);
+            border: 1px solid rgba(39, 174, 96, 0.4);
+            color: #82e0aa;
+        }
+        
+        .status-dipinjam {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            color: #f1948a;
+        }
+        
+        .status-segera {
+            background: rgba(243, 156, 18, 0.2);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            color: #f9e79f;
+        }
+        /* Rating bintang */
+        
+        .rating {
+            color: var(--emas-muda);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        /* Tombol favorit */
+        
+        .btn-favorit {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+            padding: 0;
+        }
+        
+        .btn-favorit:hover {
+            transform: scale(1.3);
+        }
+        
+        .no-kolom {
+            color: rgba(253, 246, 227, 0.3);
+            font-size: 13px;
+        }
+        /* Pesan kosong */
+        
+        .pesan-kosong {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(253, 246, 227, 0.35);
+        }
+        
+        .pesan-kosong-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        /* Footer */
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(212, 172, 13, 0.2);
+            color: rgba(253, 246, 227, 0.3);
+            font-size: 13px;
+        }
+        
+        .footer-nama {
+            color: var(--emas);
+        }
+        /* =====================
+           RESPONSIVE MOBILE
+        ===================== */
+        
+        @media (max-width: 768px) {
+            .counter-strip {
+                gap: 25px;
+            }
+            .counter-angka {
+                font-size: 22px;
+            }
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+            thead tr {
+                display: none;
+            }
+            tbody tr {
+                background: rgba(253, 246, 227, 0.04);
+                border: 1px solid rgba(212, 172, 13, 0.15);
+                border-radius: 10px;
+                margin-bottom: 16px;
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 16px;
+                border-bottom: 1px solid rgba(253, 246, 227, 0.05);
+            }
+            td::before {
+                content: attr(data-label);
+                font-size: 11px;
+                color: rgba(253, 246, 227, 0.4);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                flex-shrink: 0;
+                margin-right: 10px;
+            }
+            td:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========== HERO =========== -->
+    <div class="hero">
+        <div class="hero-bg-fallback"></div>
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-pattern"></div>
+
+        <div class="hero-content">
+            <div class="logo-gmni">
+                <div class="logo-icon">📚</div>
+            </div>
+            <p class="label-organisasi">Gerakan Mahasiswa Nasional Indonesia</p>
+            <div class="garis-emas"></div>
+            <h1 class="nama-perpustakaan">PERPUSTAKAAN GMNI</h1>
+            <p class="nama-cabang">Cabang Banjarmasin</p>
+            <p class="deskripsi-hero">Membangun intelektual kader bangsa melalui literasi.</p>
+        </div>
+    </div>
+
+    <!-- Counter -->
+    <div class="counter-strip">
+        <div class="counter-item">
+            <span class="counter-angka" id="ctr-total">0</span>
+            <span class="counter-label">Total Buku</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-angka" id="ctr-tersedia">0</span>
+            <span class="counter-label">Tersedia</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-angka" id="ctr-favorit">0</span>
+            <span class="counter-label">Difavoritkan</span>
+        </div>
+    </div>
+
+    <!-- =========== KONTROL =========== -->
+    <div class="area-kontrol">
+        <input type="text" id="inputCari" class="input-cari" placeholder="🔍  Cari judul, penulis, atau kategori...">
+
+        <div class="filter-kategori" id="filterKategori">
+            <button class="btn-filter aktif" data-kategori="semua">Semua</button>
+        </div>
+
+        <div class="bar-sorting">
+            <span class="label-sort">Urutkan:</span>
+            <button class="btn-sort aktif-sort" data-sort="judul">Judul ↕</button>
+            <button class="btn-sort" data-sort="tahun">Tahun ↕</button>
+            <button class="btn-sort" data-sort="penulis">Penulis ↕</button>
+            <button class="btn-sort" data-sort="rating">Rating ↕</button>
+        </div>
+    </div>
+
+    <!-- =========== TABEL =========== -->
+    <div class="wadah-tabel">
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Judul Buku</th>
+                    <th>Penulis</th>
+                    <th>Tahun</th>
+                    <th>Kategori</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Suka</th>
+                </tr>
+            </thead>
+            <tbody id="isiTabel"></tbody>
+        </table>
+    </div>
+
+    <footer>
+        &copy; 2026 &nbsp;|&nbsp; By <span class="footer-nama">Musa Al Kadzim</span>
+    </footer>
+
+    <script>
+        // ============================================================
+        // DATABASE BUKU
+        // Tambah buku baru dengan menyalin format { ... } di bawah ini
+        // ============================================================
+        const daftarBuku = [{
+            id: "1",
+            judul: "Bumi Manusia",
+            penulis: "Pramoedya Ananta Toer",
+            tahun: "1980",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Novel pertama dari Tetralogi Buru. Kisah Minke, pemuda pribumi terpelajar di era kolonial Belanda, yang mencintai Annelies dan berhadapan dengan sistem hukum kolonial yang diskriminatif.",
+            cover: "data:image/jpeg;base64,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"
+        }, {
+            id: "2",
+            judul: "Laskar Pelangi",
+            penulis: "Andrea Hirata",
+            tahun: "2005",
+            kategori: "Fiksi Inspiratif",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kisah sepuluh anak Belitung dengan semangat belajar luar biasa di sekolah Muhammadiyah yang hampir rubuh. Menjadi novel Indonesia terlaris sepanjang masa.",
+            cover: "assets/Buku%20Laskar%20Pelangi.jpg"
+        }, {
+            id: "3",
+            judul: "Atomic Habits",
+            penulis: "James Clear",
+            tahun: "2018",
+            kategori: "Pengembangan Diri",
+            status: "Dipinjam",
+            rating: 5,
+            sinopsis: "Panduan praktis membangun kebiasaan baik dan menghapus kebiasaan buruk. Clear membuktikan bahwa perubahan kecil 1% setiap hari dapat menghasilkan perbedaan luar biasa.",
+            cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1655988385i/40121378.jpg"
+        }, {
+            id: "4",
+            judul: "Sapiens",
+            penulis: "Yuval Noah Harari",
+            tahun: "2011",
+            kategori: "Sejarah & Ilmu Pengetahuan",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Sejarah singkat umat manusia dari zaman batu hingga era modern. Harari mengeksplorasi bagaimana Homo sapiens menguasai bumi melalui bahasa, mitos, dan institusi.",
+            cover: "assets/Buku%20Sapiens.jpg"
+        }, {
+            id: "5",
+            judul: "Filosofi Teras",
+            penulis: "Henry Manampiring",
+            tahun: "2019",
+            kategori: "Filsafat",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Mengenalkan filsafat Stoa kuno kepada pembaca modern Indonesia. Mengajarkan cara menghadapi hal-hal di luar kendali kita dengan tenang dan bijaksana.",
+            cover: "assets/Buku%20Filosofi%20Teras.jpg"
+        }, {
+            id: "6",
+            judul: "Laut Bercerita",
+            penulis: "Leila S. Chudori",
+            tahun: "2017",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Novel tentang aktivis mahasiswa yang hilang di era Orde Baru. Diceritakan dari dua sudut pandang: sang aktivis dan adiknya yang mencari kebenaran.",
+            cover: "assets/Buku%20Laut%20Bercerita.jpg"
+        }, {
+            id: "7",
+            judul: "Pemikiran Politik Sukarno",
+            penulis: "Lambert Giebels",
+            tahun: "2001",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Analisis mendalam tentang evolusi pemikiran politik Bung Karno dari masa muda hingga menjadi Presiden pertama Republik Indonesia.",
+            cover: "assets/Buku%20Pemikiran%20Politik%20Sukarno.jpg"
+        }, {
+            id: "8",
+            judul: "Homo Deus",
+            penulis: "Yuval Noah Harari",
+            tahun: "2015",
+            kategori: "Sejarah & Ilmu Pengetahuan",
+            status: "Segera Hadir",
+            rating: 4,
+            sinopsis: "Setelah Sapiens, Harari melihat masa depan umat manusia. Ketika manusia berhasil mengatasi kelaparan, wabah, dan perang, apa tujuan berikutnya?",
+            cover: "assets/Buku%20Homo%20Deus.jpg"
+        }, {
+            id: "9",
+            judul: "Negeri 5 Menara",
+            penulis: "Ahmad Fuadi",
+            tahun: "2009",
+            kategori: "Fiksi Inspiratif",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Kisah Alif dan lima sahabat di pesantren Gontor. Dengan mantra 'Man jadda wajada', mereka membuktikan mimpi bisa diraih dengan tekad dan kerja keras.",
+            cover: "assets/Buku%20Negeri%205%20Menara.jpg"
+        }, {
+            id: "10",
+            judul: "The Communist Manifesto",
+            penulis: "Karl Marx & Friedrich Engels",
+            tahun: "1848",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Dokumen paling berpengaruh dalam sejarah gerakan buruh. Menganalisis kapitalisme dan mengajukan teori perjuangan kelas sebagai motor sejarah.",
+            cover: "assets/Buku%20The%20Communist%20Manifesto.jpg"
+        }, {
+            id: "11",
+            judul: "Ikigai",
+            penulis: "Héctor García & Francesc Miralles",
+            tahun: "2016",
+            kategori: "Pengembangan Diri",
+            status: "Dipinjam",
+            rating: 4,
+            sinopsis: "Rahasia panjang umur dan kebahagiaan orang Jepang. Ikigai adalah konsep menemukan alasan untuk bangun setiap pagi, perpaduan passion, misi, profesi, dan panggilan.",
+            cover: "assets/Buku%20Ikigai.jpg"
+        }, {
+            id: "12",
+            judul: "Sejarah Gerakan Mahasiswa Indonesia",
+            penulis: "John Ingleson",
+            tahun: "1988",
+            kategori: "Politik & Nasionalisme",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kajian akademis tentang peran mahasiswa dalam pergerakan nasional Indonesia dari masa kolonial hingga kemerdekaan. Referensi penting bagi aktivis dan peneliti.",
+            cover: "assets/Buku%20Sejarah%20Gerakan%20Mahasiswa%20Indonesia.jpg"
+        }, {
+            id: "13",
+            judul: "Thinking, Fast and Slow",
+            penulis: "Daniel Kahneman",
+            tahun: "2011",
+            kategori: "Psikologi",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kahneman, peraih Nobel Ekonomi, menjelaskan dua sistem berpikir manusia. Mengungkap mengapa kita sering membuat keputusan irasional dan cara mengatasinya.",
+            cover: "assets/Buku%20Thinking%2C%20Fast%20and%20Slow.jpg"
+        }, {
+            id: "14",
+            judul: "Pulang",
+            penulis: "Leila S. Chudori",
+            tahun: "2012",
+            kategori: "Fiksi Sejarah",
+            status: "Tersedia",
+            rating: 5,
+            sinopsis: "Kisah empat eksil politik Indonesia di Paris pasca G30S 1965. Tentang kerinduan akan tanah air, identitas, dan pencarian kebenaran sejarah.",
+            cover: "assets/Buku%20Pulang.jpg"
+        }, {
+            id: "15",
+            judul: "Rich Dad Poor Dad",
+            penulis: "Robert T. Kiyosaki",
+            tahun: "1997",
+            kategori: "Pengembangan Diri",
+            status: "Tersedia",
+            rating: 4,
+            sinopsis: "Pelajaran keuangan yang tidak diajarkan di sekolah. Melalui kisah dua ayah dengan pola pikir berbeda, Kiyosaki mengajarkan cara membangun kebebasan finansial.",
+            cover: "assets/Rich Dad Poor Dad.png"
+        }];
+
+        // ============================================================
+        // LOGIKA APLIKASI
+        // ============================================================
+        let sortKolom = 'judul';
+        let sortArah = 1; // 1 = A-Z / kecil-besar, -1 = Z-A / besar-kecil
+        let filterAktif = 'semua';
+        let favoritSet = new Set(JSON.parse(localStorage.getItem('gmni-favorit') || '[]'));
+
+        // Render semua buku ke tabel
+        function renderTabel(dataBuku) {
+            const tbody = document.getElementById('isiTabel');
+            if (dataBuku.length === 0) {
+                tbody.innerHTML = `
+            <tr><td colspan="8">
+                <div class="pesan-kosong">
+                    <div class="pesan-kosong-icon">📭</div>
+                    <p>Tidak ada buku yang ditemukan.</p>
+                </div>
+            </td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = dataBuku.map((buku, i) => {
+                const isFav = favoritSet.has(buku.id);
+                const statusClass = buku.status === 'Tersedia' ? 'status-tersedia' :
+                    buku.status === 'Dipinjam' ? 'status-dipinjam' : 'status-segera';
+                const bintang = '★'.repeat(buku.rating) + '☆'.repeat(5 - buku.rating);
+
+                return `
+        <tr>
+            <td data-label="No." class="no-kolom">${i + 1}</td>
+            <td data-label="Judul">
+                <a href="detail.html?id=${buku.id}" class="link-judul">${buku.judul}</a>
+            </td>
+            <td data-label="Penulis">${buku.penulis}</td>
+            <td data-label="Tahun">${buku.tahun}</td>
+            <td data-label="Kategori"><span class="badge-kategori">${buku.kategori}</span></td>
+            <td data-label="Status"><span class="badge-status ${statusClass}">${buku.status}</span></td>
+            <td data-label="Rating"><span class="rating">${bintang}</span></td>
+            <td data-label="Favorit">
+                <button class="btn-favorit" onclick="toggleFavorit('${buku.id}', this)" title="${isFav ? 'Hapus dari favorit' : 'Tambah ke favorit'}">
+                    ${isFav ? '❤️' : '🤍'}
+                </button>
+            </td>
+        </tr>`;
+            }).join('');
+        }
+
+        // Filter + Sort + Search gabungan
+        function prosesData() {
+            const keyword = document.getElementById('inputCari').value.toLowerCase();
+
+            let hasil = daftarBuku.filter(buku => {
+                const cocokKategori = filterAktif === 'semua' || buku.kategori === filterAktif;
+                const cocokCari = (
+                    buku.judul.toLowerCase().includes(keyword) ||
+                    buku.penulis.toLowerCase().includes(keyword) ||
+                    buku.kategori.toLowerCase().includes(keyword)
+                );
+                return cocokKategori && cocokCari;
+            });
+
+            hasil.sort((a, b) => {
+                let va = a[sortKolom],
+                    vb = b[sortKolom];
+                if (sortKolom === 'tahun' || sortKolom === 'rating') {
+                    return (Number(va) - Number(vb)) * sortArah;
+                }
+                return va.localeCompare(vb) * sortArah;
+            });
+
+            renderTabel(hasil);
+        }
+
+        // Update counter strip
+        function updateCounter() {
+            document.getElementById('ctr-total').textContent = daftarBuku.length;
+            document.getElementById('ctr-tersedia').textContent = daftarBuku.filter(b => b.status === 'Tersedia').length;
+            document.getElementById('ctr-favorit').textContent = favoritSet.size;
+        }
+
+        // Bangun tombol filter dari data
+        function bangunFilter() {
+            const kategoriUnik = ['semua', ...new Set(daftarBuku.map(b => b.kategori))];
+            const container = document.getElementById('filterKategori');
+            container.innerHTML = kategoriUnik.map(k => `
+        <button class="btn-filter ${k === 'semua' ? 'aktif' : ''}" data-kategori="${k}">
+            ${k === 'semua' ? 'Semua' : k}
+        </button>
+    `).join('');
+
+            container.querySelectorAll('.btn-filter').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('aktif'));
+                    btn.classList.add('aktif');
+                    filterAktif = btn.dataset.kategori;
+                    prosesData();
+                });
+            });
+        }
+
+        // Toggle favorit
+        function toggleFavorit(id, btn) {
+            if (favoritSet.has(id)) {
+                favoritSet.delete(id);
+                btn.textContent = '🤍';
+                btn.title = 'Tambah ke favorit';
+            } else {
+                favoritSet.add(id);
+                btn.textContent = '❤️';
+                btn.title = 'Hapus dari favorit';
+            }
+            localStorage.setItem('gmni-favorit', JSON.stringify([...favoritSet]));
+            updateCounter();
+        }
+
+        // Event listeners
+        document.getElementById('inputCari').addEventListener('input', prosesData);
+
+        document.querySelectorAll('.btn-sort').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const kolom = btn.dataset.sort;
+                if (sortKolom === kolom) {
+                    sortArah *= -1;
+                } else {
+                    sortKolom = kolom;
+                    sortArah = 1;
+                }
+                document.querySelectorAll('.btn-sort').forEach(b => b.classList.remove('aktif-sort'));
+                btn.classList.add('aktif-sort');
+                btn.textContent = btn.textContent.replace('↕', sortArah === 1 ? '↑' : '↓').replace('↑', sortArah === 1 ? '↑' : '↓').replace('↓', sortArah === 1 ? '↑' : '↓');
+                prosesData();
+            });
+        });
+
+        // Init
+        bangunFilter();
+        prosesData();
+        updateCounter();
+    </script>
+</body>
+
+</html>
